@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Web Đáng Yêu</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background-color: #ffe4e1;
+            text-align: center;
+            padding: 50px;
+        }
+        h1 {
+            color: #ff69b4;
+        }
+        .custom-select {
+            font-size: 20px;
+            padding: 10px;
+            border-radius: 10px;
+            background-color: #ffb6c1;
+            border: none;
+            outline: none;
+        }
+        .media-container {
+            margin-top: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        img, video {
+            width: 80%;
+            max-width: 800px;
+            border-radius: 20px;
+            height: 600px;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        .media-container.show img, .media-container.show video {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Website này chỉ những người đặc biệt mới có thể thấy được</h1>
+        <div class="form-group">
+            <label for="resolution">Chọn độ phân giải:</label>
+            <select class="custom-select" id="resolution">
+                <option value="144p">144p</option>
+                <!-- <option value="240p">240p</option>
+                <option value="480p">480p</option> -->
+                <option value="720p">720p</option>
+                <option value="1080p">1080p</option>
+            </select>
+        </div>
+        <div class="media-container" id="mediaContainer"></div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+
+        $(document).ready(function(){
+            var container = document.getElementById('mediaContainer');
+            var img = document.createElement('img');
+            setTimeout(function() {
+                container.innerHTML = ''; // Xóa nội dung hiện tại
+                img.src = '144p.jpg'; // Đường dẫn tới ảnh
+
+                container.appendChild(img);
+
+                setTimeout(function() {
+                        container.classList.add('show');
+                }, 100);
+            }.bind(this), 500);
+           
+          
+        });
+        
+        document.getElementById('resolution').addEventListener('change', function() {
+            var container = document.getElementById('mediaContainer');
+            container.classList.remove('show');
+            setTimeout(function() {
+                container.innerHTML = ''; // Xóa nội dung hiện tại
+
+                var value = this.value;
+                if (value === '1080p') {
+                    var video = document.createElement('video');
+                    video.src = '1080p.mp4'; // Đường dẫn tới video
+                    video.controls = true;
+                    video.autoplay = true;
+                    container.appendChild(video);
+                } else {
+                    var img = document.createElement('img');
+                    img.src = value + '.jpg'; // Đường dẫn tới ảnh
+                    container.appendChild(img);
+                }
+
+                setTimeout(function() {
+                    container.classList.add('show');
+                }, 10);
+            }.bind(this), 500);
+        });
+    </script>
+</body>
+</html>
